@@ -12,13 +12,13 @@ class ReservaAlumnoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = HexColor(AppTheme.primaryColorString!);
+    final primaryColor = HexColor("#4A4A4A");
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Reservar Estacionamiento"),
         elevation: 0,
-        backgroundColor: primaryColor,
+        backgroundColor: const Color(0xFF4A4A4A),
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
