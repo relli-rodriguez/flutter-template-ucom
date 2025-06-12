@@ -18,7 +18,7 @@ class StatisticsView extends StatefulWidget {
 }
 
 class _StatisticsViewState extends State<StatisticsView> {
-  final homeController = Get.put(HomeController());
+  final homeController = Get.find<HomeController>();
   @override
   void initState() {
     homeController.customInit();

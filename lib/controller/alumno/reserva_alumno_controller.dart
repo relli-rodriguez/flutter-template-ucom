@@ -1,6 +1,7 @@
 import 'package:finpay/model/sitema_reservas.dart';
 import 'package:get/get.dart';
 import 'package:finpay/api/local.db.service.dart';
+import 'package:finpay/controller/home_controller.dart';
 
 class ReservaAlumnoController extends GetxController {
   RxList<Piso> pisos = <Piso>[].obs;
@@ -83,14 +84,16 @@ class ReservaAlumnoController extends GetxController {
       horarioInicio: horarioInicio.value!,
       horarioSalida: horarioSalida.value!,
       monto: montoCalculado,
-      estadoReserva: "PENDIENTE",
+      estado: "PENDIENTE",
       chapaAuto: autoSeleccionado.value!.chapa,
     );
 
     try {
-      // Guardar la reserva
+      // Guardar la reserva con el código del lugar
       final reservas = await db.getAll("reservas.json");
-      reservas.add(nuevaReserva.toJson());
+      final reservaJson = nuevaReserva.toJson();
+      reservaJson['codigoLugar'] = lugarSeleccionado.value!.codigoLugar;
+      reservas.add(reservaJson);
       await db.saveAll("reservas.json", reservas);
 
       // Marcar el lugar como reservado
@@ -102,6 +105,10 @@ class ReservaAlumnoController extends GetxController {
         lugares[index]['estado'] = "RESERVADO";
         await db.saveAll("lugares.json", lugares);
       }
+
+      // Actualizar contadores en HomeController
+      final homeController = Get.find<HomeController>();
+      await homeController.actualizarContadoresReserva();
 
       return true;
     } catch (e) {
@@ -124,6 +131,44 @@ class ReservaAlumnoController extends GetxController {
 
     autosCliente.value =
         autos.where((a) => a.clienteId == codigoClienteActual).toList();
+  }
+
+  Future<bool> liberarEspacio(String codigoReserva) async {
+    try {
+      // Obtener la reserva
+      final reservas = await db.getAll("reservas.json");
+      final reservaIndex = reservas.indexWhere((r) => r['codigoReserva'] == codigoReserva);
+      
+      if (reservaIndex == -1) return false;
+
+      // Obtener el lugar asociado a la reserva
+      final lugares = await db.getAll("lugares.json");
+      final lugarIndex = lugares.indexWhere(
+        (l) => l['codigoLugar'] == reservas[reservaIndex]['codigoLugar'],
+      );
+
+      if (lugarIndex != -1) {
+        // Liberar el lugar
+        lugares[lugarIndex]['estado'] = "DISPONIBLE";
+        await db.saveAll("lugares.json", lugares);
+        
+        // Actualizar el estado de la reserva
+        reservas[reservaIndex]['estado'] = "PAGADO";
+        await db.saveAll("reservas.json", reservas);
+        
+        // Recargar los lugares disponibles
+        await cargarPisosYLugares();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print("Error al liberar espacio: $e");
+      return false;
+    }
+  }
+
+  void seleccionarLugar(Lugar lugar) {
+    lugarSeleccionado.value = lugar;
   }
 
   @override

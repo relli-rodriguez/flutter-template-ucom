@@ -119,7 +119,7 @@ class Reserva {
   DateTime horarioInicio;
   DateTime horarioSalida;
   double monto;
-  String estadoReserva;
+  String estado;
   String chapaAuto; // solo la chapa
 
   Reserva({
@@ -127,25 +127,32 @@ class Reserva {
     required this.horarioInicio,
     required this.horarioSalida,
     required this.monto,
-    required this.estadoReserva,
+    required this.estado,
     required this.chapaAuto,
   });
 
-  factory Reserva.fromJson(Map<String, dynamic> json) => Reserva(
-        codigoReserva: json['codigoReserva'],
-        horarioInicio: DateTime.parse(json['horarioInicio']),
-        horarioSalida: DateTime.parse(json['horarioSalida']),
-        monto: json['monto'].toDouble(),
-        estadoReserva: json['estadoReserva'],
-        chapaAuto: json['chapaAuto'] ?? '',
-      );
+  factory Reserva.fromJson(Map<String, dynamic> json) {
+    final inicio = DateTime.parse(json['fechaInicio']);
+    final fin = DateTime.parse(json['fechaFin']);
+    final duracionEnHoras = fin.difference(inicio).inMinutes / 60;
+    final montoCalculado = (duracionEnHoras * 10000).roundToDouble();
+
+    return Reserva(
+      codigoReserva: json['codigoReserva'],
+      horarioInicio: inicio,
+      horarioSalida: fin,
+      monto: montoCalculado,
+      estado: json['estado'] ?? 'ACTIVA',
+      chapaAuto: json['chapaAuto'] ?? '',
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'codigoReserva': codigoReserva,
-        'horarioInicio': horarioInicio.toIso8601String(),
-        'horarioSalida': horarioSalida.toIso8601String(),
+        'fechaInicio': horarioInicio.toIso8601String(),
+        'fechaFin': horarioSalida.toIso8601String(),
         'monto': monto,
-        'estadoReserva': estadoReserva,
+        'estado': estado,
         'chapaAuto': chapaAuto,
       };
 }

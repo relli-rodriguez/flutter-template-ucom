@@ -1,1 +1,57 @@
-[]
+[
+    {
+      "codigoReserva": "RES001",
+      "clienteId": "cliente_1",
+      "chapaAuto": "ABC123",
+      "codigoLugar": "P1L001",
+      "fechaInicio": "2025-06-05T10:00:00",
+      "fechaFin": "2025-06-05T12:00:00",
+      "estado": "CONFIRMADA"
+    },
+    {
+      "codigoReserva": "RES002",
+      "clienteId": "cliente_1",
+      "chapaAuto": "DEF456",
+      "codigoLugar": "P1L002",
+      "fechaInicio": "2025-06-15T09:00:00",
+      "fechaFin": "2025-06-15T13:00:00",
+      "estado": "PENDIENTE"
+    },
+    {
+      "codigoReserva": "RES003",
+      "clienteId": "cliente_1",
+      "chapaAuto": "GHI789",
+      "codigoLugar": "P2L001",
+      "fechaInicio": "2025-06-20T14:00:00",
+      "fechaFin": "2025-06-20T20:00:00",
+      "estado": "PENDIENTE"
+    },
+    {
+      "codigoReserva": "RES004",
+      "clienteId": "cliente_1",
+      "chapaAuto": "ABC123",
+      "codigoLugar": "P1L003",
+      "fechaInicio": "2025-05-25T10:00:00",
+      "fechaFin": "2025-05-25T18:00:00",
+      "estado": "CANCELADA"
+    },
+    {
+      "codigoReserva": "RES005",
+      "clienteId": "cliente_1",
+      "chapaAuto": "DEF456",
+      "codigoLugar": "P1L004",
+      "fechaInicio": "2025-06-01T08:00:00",
+      "fechaFin": "2025-06-01T10:00:00",
+      "estado": "CONFIRMADA"
+    },
+    {
+      "codigoReserva": "RES006",
+      "clienteId": "cliente_1",
+      "chapaAuto": "GHI789",
+      "codigoLugar": "P2L002",
+      "fechaInicio": "2025-06-28T12:00:00",
+      "fechaFin": "2025-06-28T20:00:00",
+      "estado": "PENDIENTE"
+    }
+  ]
+  

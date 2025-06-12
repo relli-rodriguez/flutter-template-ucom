@@ -28,5 +28,11 @@
     "codigoReservaAsociada": "RES004",
     "montoPagado": 22000.0,
     "fechaPago": "2025-05-16T11:45:00"
+  },
+  {
+    "codigoPago": "PAG001",
+    "codigoReservaAsociada": "RES001",
+    "montoPagado": 20000.0,
+    "fechaPago": "2025-06-09T09:30:00"
   }
 ]

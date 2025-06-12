@@ -83,7 +83,7 @@ class ReservaController extends GetxController {
       horarioInicio: horarioInicio.value!,
       horarioSalida: horarioSalida.value!,
       monto: montoCalculado,
-      estadoReserva: "PENDIENTE",
+      estado: "PENDIENTE",
       chapaAuto: autoSeleccionado.value!.chapa,
     );
 
